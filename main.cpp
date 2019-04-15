@@ -2,6 +2,7 @@
 #include <allegro.h>
 //All grpahics and sound in Game. Allows for easy swapping.
 #define TITLEFONT "Images/Circuit Mage(24).pcx"
+#define REGFONT "Images/COMPUTER Robot (14).pcx"
 #define BACKGROUND "Images/binarybackground.pcx"
 #define COLORLINE makecol (0, 63, 0)
 
@@ -34,6 +35,17 @@ int main (void) {
 		textprintf_ex (screen, font, 100, 0, 15, -1, "Pocket Trivia"); // Print title of the game in regular font
 	else 
 		textprintf_ex (screen, titleFont, 100, 0, 15, -1, "Pocket Trivia"); // Print title of the game in custom font
+
+	// Loads the instructions of the game in the desired Font
+	FONT * regFont = load_font (REGFONT, palette, NULL);
+	if (!regFont) {
+		textprintf_ex (screen, font, SCREEN_W - 200, SCREEN_H - 20, 15, -1, "Press ESC to exit...");
+	}
+	else
+	{
+		textprintf_ex (screen, regFont, SCREEN_W - 170, SCREEN_H - 20, 15, -1, "Press ESC to exit...");
+	}
+
 	hline (screen, 0,40,SCREEN_W, COLORLINE);
 	hline (screen, 0,SCREEN_H-40,SCREEN_W, COLORLINE);
 

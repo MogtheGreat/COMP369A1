@@ -1,4 +1,3 @@
 # COMP369A1
 
-Font Type:		Created By:
-Circuit Mage	Adadglgwut 
+Font Type: Circuit Mage		Created By: Adadglgwut 
