@@ -1,9 +1,10 @@
 #include <iostream>
 #include <allegro.h>
 //All grpahics and sound in Game. Allows for easy swapping.
-#define TITLEFONT "Images/Circuit Mage(24).pcx"
-#define REGFONT "Images/COMPUTER Robot (14).pcx"
+#define TITLEFONT "Fonts/Circuit Mage(24).pcx"
+#define REGFONT "Fonts/COMPUTER Robot (14).pcx"
 #define BACKGROUND "Images/binarybackground.pcx"
+#define IMAGE "Images/image1.pcx"
 #define COLORLINE makecol (0, 63, 0)
 
 int main (void) {
@@ -19,7 +20,7 @@ int main (void) {
 	}
 
 	// Creates the window and sets the graphics mode
-	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 740, 580, 0, 0);
+	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
 	if (ret != 0) {
 		allegro_message ("%s\n", allegro_error);
 		return 1;
@@ -28,6 +29,10 @@ int main (void) {
 	BITMAP * backImage = load_bitmap (BACKGROUND, NULL); //load the image file
 	if (backImage)
 		blit (backImage, screen, 0,0, 0, 0, SCREEN_W, SCREEN_H); //display the image
+
+	BITMAP * image = load_bitmap (IMAGE, NULL); // Load the image file
+	if (image)
+		blit (image, screen, 0,0, (SCREEN_W - image -> w), 40, image -> w, image -> h); //display the image
 
 	// Loads the Title of the game in the desired Font
 	FONT * titleFont = load_font (TITLEFONT, palette, NULL);
