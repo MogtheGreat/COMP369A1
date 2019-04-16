@@ -87,8 +87,7 @@ void playStart (int &play, FONT * regFont) {
 		textprintf_ex (screen, font, 200, SCREEN_H-80, 15, -1, "Press Enter to continue.");
 		textprintf_ex (screen, font, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
 	}
-	else
-	{
+	else {
 		textprintf_ex (screen, regFont, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
 		textprintf_ex (screen, regFont, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
 		textprintf_ex (screen, regFont, 0, 120, 15, -1, "from the textbook \"Game Programming All in One\".");
@@ -100,6 +99,21 @@ void playStart (int &play, FONT * regFont) {
 		textprintf_ex (screen, regFont, 0, 260, 15, -1, "by pressing M");
 		
 		textprintf_ex (screen, regFont, 200, SCREEN_H-80, 15, -1, "Press Enter to continue.");
+		textprintf_ex (screen, regFont, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
+	}
+}
+
+void menu (FONT * regFont) {
+	if (!regFont) {
+		textprintf_ex (screen, font, 0, 100, 15, -1, "Press A for all chapters from text.");
+		textprintf_ex (screen, font, 0, 150, 15, -1, "Press U to choose a unit from text.");
+		textprintf_ex (screen, font, 0, 200, 15, -1, "Press C to choose a chapter from text.");
+		textprintf_ex (screen, font, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
+	}
+	else {
+		textprintf_ex (screen, regFont, 0, 100, 15, -1, "Press A for all chapters from text.");
+		textprintf_ex (screen, regFont, 0, 150, 15, -1, "Press U to choose a unit from text.");
+		textprintf_ex (screen, regFont, 0, 200, 15, -1, "Press C to choose a chapter from text.");
 		textprintf_ex (screen, regFont, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
 	}
 }
@@ -121,6 +135,7 @@ int main (void) {
 	vector <string> availBackground;
 	vector <string> availFont;
 	int play = 0;
+	int choice = 0;
 
 	// Initializes the Allegro library and sets up the interrupts
 	if (init_Lib () == 1)
@@ -156,8 +171,34 @@ int main (void) {
 			playStart (play, regFont);
 			while (!keypressed());
 			readkey();
+			
 			if (key[KEY_ENTER])
 				play = 1;
+		}
+
+		else if (play == 1) {
+			printBackground (titleFont, backImage);
+			menu (regFont);
+			while (!keypressed());
+			readkey();
+			
+			if (key[KEY_A])
+				play = 2;
+			if (key[KEY_U]) {
+				play = 2;
+				choice = 1;
+			}
+			if (key[KEY_C]) {
+				play = 2;
+				choice = 2;
+			}
+		}
+
+		else if (choice == 1) {
+
+		}
+		else if (choice == 2) {
+
 		}
 		else {
 			printBackground (titleFont, backImage);

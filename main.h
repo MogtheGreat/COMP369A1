@@ -17,6 +17,8 @@ void printInfo (FONT * regFont);
 
 void playStart (int &play, FONT * regFont);
 
+void menu (FONT * regFont);
+
 void playGame (FONT * regFont);
 
 #endif
