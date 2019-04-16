@@ -61,12 +61,18 @@ void printInfo (FONT * regFont) {
 
 	// Loads the instructions of the game in the desired Font
 	if (!regFont) {
-		textprintf_ex (screen, font, SCREEN_W - 200, SCREEN_H - 20, 15, -1, "Press ESC to exit...");
+		textprintf_ex (screen, font, SCREEN_W - 150, SCREEN_H - 20, 15, -1, "ESC: Exit...");
+		textprintf_ex (screen, font, SCREEN_W - 200, 240, 15, -1, "M: Menu");
 	}
 	else
 	{
-		textprintf_ex (screen, regFont, SCREEN_W - 200, SCREEN_H - 40, 15, -1, "Press ESC to exit...");
+		textprintf_ex (screen, regFont, SCREEN_W - 150, SCREEN_H - 40, 15, -1, "ESC: Exit...");
+		textprintf_ex (screen, regFont, SCREEN_W - 200, 240, 15, -1, "M: Menu");
 	}
+}
+
+void printMenu (FONT * regFont) {
+
 }
 
 int main (void) {
@@ -109,6 +115,11 @@ int main (void) {
 
 		// Print options/info about game
 		printInfo (regFont);
+
+		if (key[KEY_M]) {
+			cout << "Pressed M." << endl;
+			rest (20);
+		}
 
 		rest (100);
 		destroy_bitmap (image); //delete bitmap from memory
