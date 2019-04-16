@@ -1,14 +1,19 @@
-#include <iostream>
 #include <allegro.h>
+#include "aux.h"
 //All grpahics and sound in Game. Allows for easy swapping.
 #define TITLEFONT "Fonts/Circuit Mage(24).pcx"
 #define REGFONT "Fonts/COMPUTER Robot (14).pcx"
-#define BACKGROUND "Images/binarybackground.pcx"
+#define BACKGROUND "Background/binarybackground.pcx"
 #define IMAGE "Images/image1.pcx"
 #define COLORLINE makecol (0, 63, 0)
 
+using namespace std;
+
 int main (void) {
 	PALETTE palette;	// Color palette for fonts.
+	vector <string> availImages; 
+	vector <string> availBackground;
+	vector <string> availFont; 
 
 	int check = allegro_init ();		// Initialize Allegro library
 	check = install_keyboard ();		// Install the keyboard interrupt
@@ -18,6 +23,11 @@ int main (void) {
 		std::cerr << "Allegro library failed to Initialize!" << std::endl;
 		return 1;
 	}
+
+	// Get list of all avail images, fonts and background.
+	availImages = getFileNames ("Images");
+	availBackground = getFileNames ("Fonts");
+	availFont = getFileNames ("Background");
 
 	// Creates the window and sets the graphics mode
 	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
@@ -65,3 +75,4 @@ int main (void) {
 	return 0;
 }
 END_OF_MAIN()
+
