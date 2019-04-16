@@ -10,7 +10,7 @@ using namespace std;
 
 int init_Lib () {
 	int check = allegro_init ();		// Initialize Allegro library
-	check = install_keyboard ();		// Install the keyboard interrupt
+	check += install_keyboard ();		// Install the keyboard interrupt
 	
 	// Checks to see if library properly initialized.
 	if (check != 0) {
@@ -55,6 +55,7 @@ void printBackground (FONT * titleFont, BITMAP * backImage) {
 	// print borders
 	hline (screen, 0,40,SCREEN_W, COLORLINE);
 	hline (screen, 0,SCREEN_H-40,SCREEN_W, COLORLINE);
+	rest (100);
 }
 
 void printInfo (FONT * regFont) {
@@ -71,14 +72,55 @@ void printInfo (FONT * regFont) {
 	}
 }
 
-void printMenu (FONT * regFont) {
+void playStart (int &play, FONT * regFont) {
+	if (!regFont) {
+		textprintf_ex (screen, font, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
+		textprintf_ex (screen, font, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
+		textprintf_ex (screen, font, 0, 120, 15, -1, "from the textbook \"Game Programming All in One\".");
+		textprintf_ex (screen, font, 0, 150, 15, -1, "Choices can be selected by pressing 1, 2, 3, or 4 on the keyboard.");
+		
+		textprintf_ex (screen, font, 0, 180, 15, -1, "Player's score is kept at the bottom of the screen as a ratio.");
+		textprintf_ex (screen, font, 0, 210, 15, -1, "At the end of the game, players final score is displayed.");
+		textprintf_ex (screen, font, 0, 240, 15, -1, "At any point a player can change the set of questions being asked");
+		textprintf_ex (screen, font, 0, 260, 15, -1, "by pressing M");
+		
+		textprintf_ex (screen, font, 200, SCREEN_H-80, 15, -1, "Press Enter to continue.");
+		textprintf_ex (screen, font, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
+	}
+	else
+	{
+		textprintf_ex (screen, regFont, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
+		textprintf_ex (screen, regFont, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
+		textprintf_ex (screen, regFont, 0, 120, 15, -1, "from the textbook \"Game Programming All in One\".");
+		textprintf_ex (screen, regFont, 0, 150, 15, -1, "Choices can be selected by pressing 1, 2, 3, or 4 on the keyboard.");
+		
+		textprintf_ex (screen, regFont, 0, 180, 15, -1, "Player's score is kept at the bottom of the screen as a ratio.");
+		textprintf_ex (screen, regFont, 0, 210, 15, -1, "At the end of the game, players final score is displayed.");
+		textprintf_ex (screen, regFont, 0, 240, 15, -1, "At any point a player can change the set of questions being asked");
+		textprintf_ex (screen, regFont, 0, 260, 15, -1, "by pressing M");
+		
+		textprintf_ex (screen, regFont, 200, SCREEN_H-80, 15, -1, "Press Enter to continue.");
+		textprintf_ex (screen, regFont, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
+	}
+}
 
+void playGame (FONT * regFont, vector <string> availImages) {
+	// Choose a new random image
+	BITMAP * image = randImage (availImages);
+	if (image)
+		blit (image, screen, 0,0, (SCREEN_W - image -> w), 40, image -> w, image -> h); //display the image
+
+	// Print options/info about game
+	printInfo (regFont);
+	rest (100);
+	destroy_bitmap (image); //delete bitmap from memory
 }
 
 int main (void) {
 	vector <string> availImages; 
 	vector <string> availBackground;
-	vector <string> availFont; 
+	vector <string> availFont;
+	int play = 0;
 
 	// Initializes the Allegro library and sets up the interrupts
 	if (init_Lib () == 1)
@@ -98,6 +140,7 @@ int main (void) {
 		return 1;
 	}
 
+	// Set up Screen
 	PALETTE palette;	// Color palette for fonts.
 	FONT * titleFont = load_font (TITLEFONT, palette, NULL);
 	FONT * regFont = randFont (availFont, palette);
@@ -107,22 +150,21 @@ int main (void) {
 
 	// While user has not pressed ESC key.
 	while (!key[KEY_ESC]) {
-		
-		// Choose a new random image
-		BITMAP * image = randImage (availImages);
-		if (image)
-			blit (image, screen, 0,0, (SCREEN_W - image -> w), 40, image -> w, image -> h); //display the image
 
-		// Print options/info about game
-		printInfo (regFont);
-
-		if (key[KEY_M]) {
-			cout << "Pressed M." << endl;
-			rest (20);
+		if (play == 0) {
+			printBackground (titleFont, backImage);
+			playStart (play, regFont);
+			while (!keypressed());
+			readkey();
+			if (key[KEY_ENTER])
+				play = 1;
 		}
-
-		rest (100);
-		destroy_bitmap (image); //delete bitmap from memory
+		else {
+			printBackground (titleFont, backImage);
+			playGame (regFont, availImages);
+			while (!keypressed());
+			readkey();
+		}
 	}
 
 	destroy_bitmap (backImage); //delete bitmap from memory

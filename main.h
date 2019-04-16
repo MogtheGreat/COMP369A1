@@ -15,4 +15,8 @@ void printBackground (FONT * titleFont, BITMAP * backImage);
 
 void printInfo (FONT * regFont);
 
+void playStart (int &play, FONT * regFont);
+
+void playGame (FONT * regFont);
+
 #endif
