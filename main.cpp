@@ -21,27 +21,6 @@ int init_Lib () {
 		return 0;
 }
 
-BITMAP * randBack (vector <string> list) {
-	int randomIndex = rand () % list.size();	// Pick a random element from list
-	string filePath = "Background/" + list[randomIndex]; // get the path to the file
-	BITMAP * backImage = load_bitmap (filePath.c_str(), NULL); // load the image to the program
-	return backImage;
-}
-
-BITMAP * randImage (vector <string> list) {
-	int randomIndex = rand () % list.size();	// Pick a random element from list
-	string filePath = "Images/" + list[randomIndex]; // get the path to the file
-	BITMAP * image = load_bitmap (filePath.c_str(), NULL); // load the image to the program
-	return image;
-}
-
-FONT * randFont (vector <string> list, PALETTE palette) {
-	int randomIndex = rand () % list.size();	// Pick a random element from list
-	string filePath = "Fonts/" + list[randomIndex]; // get the path to the file
-	FONT * font = load_font (filePath.c_str(), palette, NULL); // loads the font to the program
-	return font;
-}
-
 void printBackground (FONT * titleFont, BITMAP * backImage) {
 	// generate background
 	if (backImage)
@@ -121,9 +100,34 @@ void menu (FONT * regFont) {
 void menuUnit (FONT * regFont) {
 	if (!regFont) {
 		textprintf_ex (screen, font, 0, 100, 15, -1, "Press 1,2,3,4,5 or 6 for the corresponding unit.");
+		textprintf_ex (screen, font, 0, 120, 15, -1, "1: Unit 1");
+		textprintf_ex (screen, font, 0, 140, 15, -1, "2: Unit 2");
+		textprintf_ex (screen, font, 0, 160, 15, -1, "3: Unit 3");
+		textprintf_ex (screen, font, 0, 180, 15, -1, "4: Unit 4");
+
 	}
 	else {
-		textprintf_ex (screen, regFont, 0, 100, 15, -1, "Press 1,2,3,4,5 or 6 for the corresponding unit.");
+		textprintf_ex (screen, regFont, 0, 100, 15, -1, "Press 1,2,3, or 4 for the corresponding unit.");
+		textprintf_ex (screen, regFont, 0, 120, 15, -1, "1: Unit 1");
+		textprintf_ex (screen, regFont, 0, 140, 15, -1, "2: Unit 2");
+		textprintf_ex (screen, regFont, 0, 160, 15, -1, "3: Unit 3");
+		textprintf_ex (screen, regFont, 0, 180, 15, -1, "4: Unit 4");
+	}
+}
+
+void menuUnitInput (int & unit) {
+	// 1,2,3,4 keys chooses which Unit to take questions from
+	if (key[KEY_1]) {
+		unit = 0;
+	}
+	if (key[KEY_2]) {
+		unit = 1;
+	}
+	if (key[KEY_3]) {
+		unit = 2;
+	}
+	if (key[KEY_4]) {
+		unit = 3;
 	}
 }
 
@@ -145,6 +149,8 @@ int main (void) {
 	vector <string> availFont;
 	int play = 0;
 	int choice = 0;
+	int unit = -1;
+	int chapter = -1;
 
 	// Initializes the Allegro library and sets up the interrupts
 	if (init_Lib () == 1)
@@ -191,8 +197,12 @@ int main (void) {
 			while (!keypressed());
 			readkey();
 			
-			if (key[KEY_A])
+			if (key[KEY_A]) {
 				play = 2;
+				unit = -1;
+				chapter = -1;
+			}
+			
 			if (key[KEY_U]) {
 				play = 2;
 				choice = 1;
@@ -208,9 +218,23 @@ int main (void) {
 			menuUnit (regFont);
 			while (!keypressed());
 			readkey();
-		}
-		else if (choice == 2) {
 
+			menuUnitInput (unit);
+			if (unit != -1) {
+				choice = 3;
+				chapter = -1;
+			}
+		}
+
+		else if (choice == 2) {
+			printBackground (titleFont, backImage);
+			while (!keypressed());
+			readkey();
+
+			if (chapter != -1) {
+				choice = 3;
+				unit = -1;
+			}
 		}
 		else {
 			printBackground (titleFont, backImage);
