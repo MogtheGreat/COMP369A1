@@ -118,6 +118,15 @@ void menu (FONT * regFont) {
 	}
 }
 
+void menuUnit (FONT * regFont) {
+	if (!regFont) {
+		textprintf_ex (screen, font, 0, 100, 15, -1, "Press 1,2,3,4,5 or 6 for the corresponding unit.");
+	}
+	else {
+		textprintf_ex (screen, regFont, 0, 100, 15, -1, "Press 1,2,3,4,5 or 6 for the corresponding unit.");
+	}
+}
+
 void playGame (FONT * regFont, vector <string> availImages) {
 	// Choose a new random image
 	BITMAP * image = randImage (availImages);
@@ -195,7 +204,10 @@ int main (void) {
 		}
 
 		else if (choice == 1) {
-
+			printBackground (titleFont, backImage);
+			menuUnit (regFont);
+			while (!keypressed());
+			readkey();
 		}
 		else if (choice == 2) {
 
