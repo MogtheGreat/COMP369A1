@@ -26,6 +26,8 @@ void menuUnitInput (int & unit);
 
 void menuChapter (FONT * regFont);
 
+void menuChapterInput (int & chapter);
+
 void playGame (FONT * regFont, std::vector <std::string> availImages);
 
 #endif

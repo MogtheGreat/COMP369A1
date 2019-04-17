@@ -87,9 +87,11 @@ int main (void) {
 
 		else if (choice == 2) {
 			printBackground (titleFont, backImage);
+			menuChapter (regFont);
 			while (!keypressed());
 			readkey();
 
+			menuChapterInput (chapter);
 			if (chapter != -1) {
 				choice = 3;
 				unit = -1;
