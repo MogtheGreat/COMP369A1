@@ -5,6 +5,8 @@
 #include <string>
 #include <dirent.h>
 #include <allegro.h>
+#include <algorithm>
+#include "question.h"
 
 std::vector <std::string> getFileNames (std::string dirName);
 
@@ -14,5 +16,6 @@ BITMAP * randImage (std::vector <std::string> list);
 
 FONT * randFont (std::vector <std::string> list, PALETTE palette);
 
+void getQuestions (std::vector <std::string> list);
 
 #endif

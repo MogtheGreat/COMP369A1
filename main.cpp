@@ -6,6 +6,7 @@ int main (void) {
 	vector <string> availImages; 
 	vector <string> availBackground;
 	vector <string> availFont;
+	vector <string> availQuestions;
 	int play = 0;
 	int choice = 0;
 	int unit = -1;
@@ -17,10 +18,12 @@ int main (void) {
 
 	srand (time (NULL)); // seed random generator.
 
-	// Get list of all avail images, fonts and background.
+	// Get list of all avail questions, images, fonts and background.
 	availImages = getFileNames ("Images");
 	availBackground = getFileNames ("Background");
 	availFont = getFileNames ("Fonts");
+	availQuestions = getFileNames ("Questions");
+	getQuestions (availQuestions);
 
 	// Creates the window and sets the graphics mode
 	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);

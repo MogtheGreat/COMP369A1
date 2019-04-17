@@ -3,6 +3,8 @@
 #include <allegro.h>
 #include "aux.h"
 
+//Struct that represent Question and answer
+
 //All grpahics and sound in Game. Allows for easy swapping.
 #define TITLEFONT "TitleFont/Circuit Mage(24).pcx"
 #define COLORLINE makecol (0, 63, 0)

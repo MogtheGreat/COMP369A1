@@ -8,12 +8,14 @@ LIBFLAGS = `pkg-config --cflags --libs allegro` -lstdc++
 .c.o:
 	$(CPP) $(LIBFLAGS) $(CPPFLAGS) -c $<
 
-Trivia:	main.cpp game.o game.h aux.h aux.o
+Trivia:	main.cpp game.o game.h aux.h aux.o question.o question.h
 	$(CPP) $(CPPFLAGS) main.cpp aux.o game.o $(LIBFLAGS) $(OFLAG) Trivia
 
-aux.o:	aux.h aux.cpp
+aux.o:	aux.h aux.cpp question.h
 
 game.o: game.cpp game.h
+
+question.o: question.cpp question.h
 
 clean:
 	rm -f *.o Trivia

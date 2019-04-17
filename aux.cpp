@@ -44,3 +44,12 @@ FONT * randFont (vector <string> list, PALETTE palette) {
 	FONT * font = load_font (filePath.c_str(), palette, NULL); // loads the font to the program
 	return font;
 }
+
+void getQuestions (std::vector <std::string> list) {
+	std::sort (list.begin(), list.end());
+	for (int i = 0; i < (int) list.size(); i++)
+	{
+		string filePath = "Questions/" + list[i];
+		cout << filePath << endl;
+	}
+}
