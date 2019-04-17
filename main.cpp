@@ -102,6 +102,9 @@ int main (void) {
 			playGame (regFont, availImages);
 			while (!keypressed());
 			readkey();
+
+			if (key[KEY_M])
+				play = 1;
 		}
 	}
 

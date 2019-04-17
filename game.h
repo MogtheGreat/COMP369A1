@@ -14,8 +14,6 @@ int init_Lib ();
 
 void printBackground (FONT * titleFont, BITMAP * backImage);
 
-void printInfo (FONT * regFont);
-
 void playStart (int &play, FONT * regFont);
 
 void menu (FONT * regFont);
@@ -27,6 +25,8 @@ void menuUnitInput (int & unit);
 void menuChapter (FONT * regFont);
 
 void menuChapterInput (int & chapter);
+
+void printInfo (FONT * regFont);
 
 void playGame (FONT * regFont, std::vector <std::string> availImages);
 

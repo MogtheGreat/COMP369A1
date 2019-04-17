@@ -31,20 +31,6 @@ void printBackground (FONT * titleFont, BITMAP * backImage) {
 	rest (100);
 }
 
-void printInfo (FONT * regFont) {
-
-	// Loads the instructions of the game in the desired Font
-	if (!regFont) {
-		textprintf_ex (screen, font, SCREEN_W - 150, SCREEN_H - 20, 15, -1, "ESC: Exit...");
-		textprintf_ex (screen, font, SCREEN_W - 200, 240, 15, -1, "M: Menu");
-	}
-	else
-	{
-		textprintf_ex (screen, regFont, SCREEN_W - 150, SCREEN_H - 40, 15, -1, "ESC: Exit...");
-		textprintf_ex (screen, regFont, SCREEN_W - 200, 240, 15, -1, "M: Menu");
-	}
-}
-
 void playStart (int &play, FONT * regFont) {
 	if (!regFont) {
 		textprintf_ex (screen, font, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
@@ -256,12 +242,27 @@ void menuChapterInput (int & chapter) {
 	}
 }
 
+void printInfo (FONT * regFont) {
+
+	// Loads the instructions of the game in the desired Font
+	if (!regFont) {
+		textprintf_ex (screen, font, SCREEN_W - 150, SCREEN_H - 20, 15, -1, "ESC: Exit...");
+		textprintf_ex (screen, font, SCREEN_W - 200, 240, 15, -1, "M: Menu");
+	}
+	else
+	{
+		textprintf_ex (screen, regFont, SCREEN_W - 150, SCREEN_H - 40, 15, -1, "ESC: Exit...");
+		textprintf_ex (screen, regFont, SCREEN_W - 200, 240, 15, -1, "M: Menu");
+	}
+}
+
 void playGame (FONT * regFont, vector <string> availImages) {
 	// Choose a new random image
 	BITMAP * image = randImage (availImages);
 	if (image)
 		blit (image, screen, 0,0, (SCREEN_W - image -> w), 40, image -> w, image -> h); //display the image
 
+	
 	// Print options/info about game
 	printInfo (regFont);
 	rest (100);
