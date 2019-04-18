@@ -116,8 +116,8 @@ int main (void) {
 		}
 		else {
 			printBackground (titleFont, backImage);
-			getRandQuest (chapterList, unit, chapter);
-			playGame (regFont, availImages);
+			Question quest = getRandQuest (chapterList, unit, chapter);
+			playGame (regFont, availImages, quest);
 			while (!keypressed());
 			readkey();
 

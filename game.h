@@ -25,8 +25,10 @@ void menuChapter (FONT * regFont);
 
 void menuChapterInput (int & chapter);
 
-void printInfo (FONT * regFont);
+void printSplitLine (FONT * regFont, std::string line);
 
-void playGame (FONT * regFont, std::vector <std::string> availImages);
+void printInfo (FONT * regFont, Question quest);
+
+void playGame (FONT * regFont, std::vector <std::string> availImages, Question quest);
 
 #endif

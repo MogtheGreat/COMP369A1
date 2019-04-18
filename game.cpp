@@ -242,7 +242,12 @@ void menuChapterInput (int & chapter) {
 	}
 }
 
-void printInfo (FONT * regFont) {
+void printSplitLine (FONT * regFont, std::string line) {
+	int size = line.size();
+}
+
+void printInfo (FONT * regFont, Question quest) {
+	string line;
 
 	// Loads the instructions of the game in the desired Font
 	if (!regFont) {
@@ -253,17 +258,21 @@ void printInfo (FONT * regFont) {
 	{
 		textprintf_ex (screen, regFont, SCREEN_W - 150, SCREEN_H - 40, 15, -1, "ESC: Exit...");
 		textprintf_ex (screen, regFont, SCREEN_W - 200, 240, 15, -1, "M: Menu");
+		if (quest.getAsk ().size() <= 65) 
+			textprintf_ex (screen, regFont, 0, 40, 15, -1, "%s", quest.getAsk ().c_str());
+		else
+			printSplitLine (regFont, quest.getAsk ());
 	}
 }
 
-void playGame (FONT * regFont, vector <string> availImages) {
+void playGame (FONT * regFont, vector <string> availImages, Question quest) {
 	// Choose a new random image
 	BITMAP * image = randImage (availImages);
 	if (image)
 		blit (image, screen, 0,0, (SCREEN_W - image -> w), 40, image -> w, image -> h); //display the image
 
 	// Print options/info about game
-	printInfo (regFont);
+	printInfo (regFont, quest);
 	rest (100);
 	destroy_bitmap (image); //delete bitmap from memory
 }

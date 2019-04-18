@@ -120,14 +120,15 @@ void questRange (int unit, int chapter, int &begin, int &end) {
 }
 
 Question getRandQuest (vector <vector <Question> > chapterList, int unit, int chapter) {
-	Question hold;
 	int begin = -1;
 	int end = -1;
 	int randChapter = -1;
+	int randQuest = rand() % 10;
 
 	questRange (unit, chapter, begin, end);
 	randChapter = rand() % ((end - begin) + 1)+begin;
     cout << randChapter << endl;
+    cout << randQuest << endl;
 
-	return hold;
+	return chapterList[randChapter][randQuest];
 }
