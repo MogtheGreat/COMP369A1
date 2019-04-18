@@ -1,4 +1,5 @@
 #include "aux.h"
+#include "question.h"
 
 using namespace std;
 
@@ -47,9 +48,40 @@ FONT * randFont (vector <string> list, PALETTE palette) {
 
 void getQuestions (std::vector <std::string> list) {
 	std::sort (list.begin(), list.end());
+
 	for (int i = 0; i < (int) list.size(); i++)
 	{
+		string line;
 		string filePath = "Questions/" + list[i];
-		cout << filePath << endl;
+		ifstream file (filePath.c_str());
+
+		int cycle = 0;
+
+
+		if (file.is_open()){
+
+			vector <Question> chapter;
+			vector <string> choice;
+			string ask;
+			char answer;
+
+			while (getline (file,line)) {
+				if (cycle == 0)
+					ask = line;
+				else if ((cycle > 0) && (cycle < 5))
+					choice.push_back(line);
+				else if (cycle == 5)
+					answer = line.at(0);
+				cycle = (cycle + 1) % 6;
+				
+				if (cycle == 0)
+				{
+					Question hold (ask, choice, answer);
+					chapter.push_back (hold);
+					choice.clear();
+				}
+			}
+			file.close();
+		}
 	}
 }

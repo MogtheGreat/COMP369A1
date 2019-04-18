@@ -6,6 +6,7 @@
 #include <dirent.h>
 #include <allegro.h>
 #include <algorithm>
+#include <fstream>
 #include "question.h"
 
 std::vector <std::string> getFileNames (std::string dirName);
