@@ -17,6 +17,7 @@ public:
 	void setAnswer (char ans);
 	std::string getAsk ();
 	std::string getChoice (int num = 0);
+	int numChoice ();
 	char getAns ();
 };
 

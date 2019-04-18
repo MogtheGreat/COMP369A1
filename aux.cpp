@@ -1,5 +1,4 @@
 #include "aux.h"
-#include "question.h"
 
 using namespace std;
 
@@ -46,8 +45,9 @@ FONT * randFont (vector <string> list, PALETTE palette) {
 	return font;
 }
 
-void getQuestions (std::vector <std::string> list) {
+vector <vector <Question> > getQuestions (vector <string> list) {
 	std::sort (list.begin(), list.end());
+	vector <vector <Question> > chapterList;
 
 	for (int i = 0; i < (int) list.size(); i++)
 	{
@@ -82,6 +82,52 @@ void getQuestions (std::vector <std::string> list) {
 				}
 			}
 			file.close();
+			chapterList.push_back (chapter);
 		}
 	}
+	return chapterList;
+}
+
+void questRange (int unit, int chapter, int &begin, int &end) {
+	if ((unit != -1) && (chapter =+ -1))
+	{
+		if (unit == 0) {
+			begin = 0;
+			end = 5;
+		}
+		else if (unit == 1) {
+			begin = 6;
+			end = 10;
+		}
+		else if (unit == 2) {
+			begin = 11;
+			end = 15;
+		}
+		else {
+			begin = 16;
+			end = 21;
+		}
+	}
+	else if ((unit == -1) && (chapter != -1))
+	{
+		begin = chapter;
+		end = chapter;
+	}
+	else {
+		begin = 0;
+		end = 21;
+	}
+}
+
+Question getRandQuest (vector <vector <Question> > chapterList, int unit, int chapter) {
+	Question hold;
+	int begin = -1;
+	int end = -1;
+	int randChapter = -1;
+
+	questRange (unit, chapter, begin, end);
+	randChapter = rand() % ((end - begin) + 1)+begin;
+    cout << randChapter << endl;
+
+	return hold;
 }

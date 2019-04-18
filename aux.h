@@ -17,6 +17,10 @@ BITMAP * randImage (std::vector <std::string> list);
 
 FONT * randFont (std::vector <std::string> list, PALETTE palette);
 
-void getQuestions (std::vector <std::string> list);
+std::vector <std::vector <Question> > getQuestions (std::vector <std::string> list);
+
+void questRange (int unit, int chapter, int &begin, int &end);
+
+Question getRandQuest (std::vector <std::vector <Question> > chapterList, int unit, int chapter);
 
 #endif

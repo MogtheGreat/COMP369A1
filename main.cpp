@@ -3,6 +3,7 @@
 using namespace std;
 
 int main (void) {
+	vector <vector <Question> > chapterList;
 	vector <string> availImages; 
 	vector <string> availBackground;
 	vector <string> availFont;
@@ -23,7 +24,20 @@ int main (void) {
 	availBackground = getFileNames ("Background");
 	availFont = getFileNames ("Fonts");
 	availQuestions = getFileNames ("Questions");
-	getQuestions (availQuestions);
+	chapterList = getQuestions (availQuestions);
+
+	// THIS WORKS!
+	/*for (int i = 0; i < (int) chapterList.size(); i++) {
+		for (int k = 0; k < (int) chapterList[i].size(); k++) {
+			cout << chapterList[i][k].getAsk () << endl;
+
+			for (int j = 0; j < chapterList[i][k].numChoice (); j++) {
+				cout << chapterList[i][k].getChoice (j) << endl; 
+			}
+
+			cout << chapterList[i][k].getAns ()<< endl;
+		}
+	} */
 
 	// Creates the window and sets the graphics mode
 	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
@@ -102,6 +116,7 @@ int main (void) {
 		}
 		else {
 			printBackground (titleFont, backImage);
+			getRandQuest (chapterList, unit, chapter);
 			playGame (regFont, availImages);
 			while (!keypressed());
 			readkey();

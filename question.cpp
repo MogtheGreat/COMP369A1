@@ -31,6 +31,10 @@ std::string Question :: getChoice (int num) {
 	return choice[num];
 }
 
+int Question :: numChoice () {
+	return (int) choice.size();
+}
+
 char Question :: getAns () {
 	return answer;
 }

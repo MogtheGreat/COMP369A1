@@ -262,7 +262,6 @@ void playGame (FONT * regFont, vector <string> availImages) {
 	if (image)
 		blit (image, screen, 0,0, (SCREEN_W - image -> w), 40, image -> w, image -> h); //display the image
 
-	
 	// Print options/info about game
 	printInfo (regFont);
 	rest (100);
