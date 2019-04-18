@@ -11,7 +11,7 @@ int main (void) {
 	vector <string> availFont;
 	vector <string> availQuestions;
 
-	int play = 0;
+	int playScreen = 0;
 	int choice = 0;
 	int unit = -1;
 	int chapter = -1;
@@ -51,35 +51,35 @@ int main (void) {
 	while (!key[KEY_ESC]) {
 
 		// Plays instruction at start of game
-		if (play == 0) {
+		if (playScreen == 0) {
 			printBackground (titleFont, backImage); // Prints the background screen
-			playStart (play, regFont); // Add instruction to screen
+			playStart (playScreen, regFont); // Add instruction to screen
 			while (!keypressed()); // Wait for key press
 			readkey(); // Removes key press from buffer. Without keypressed() remains true after first key press
 			
 			if (key[KEY_ENTER])// if player press enter continue game
-				play = 1;
+				playScreen = 1;
 		}
 
 		// Show Main Menu
-		else if (play == 1) {
+		else if (playScreen == 1) {
 			printBackground (titleFont, backImage); // Prints the background screen
 			menu (regFont); // Add menu selection
 			while (!keypressed()); // Wait for key press
 			readkey();
 			
 			if (key[KEY_A]) { // Player selects all chapters
-				play = 2;
+				playScreen = 2;
 				unit = -1;
 				chapter = -1;
 			}
 			
 			if (key[KEY_U]) { //Player select unit selection
-				play = 2;
+				playScreen = 2;
 				choice = 1;
 			}
 			if (key[KEY_C]) { // Player select chapter selection
-				play = 2;
+				playScreen = 2;
 				choice = 2;
 			}
 		}
@@ -146,7 +146,7 @@ int main (void) {
 			}
 
 			if (key[KEY_M])
-				play = 1;
+				playScreen = 1;
 		}
 	}
 
