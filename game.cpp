@@ -36,7 +36,7 @@ void playStart (int &play, FONT * regFont) {
 		textprintf_ex (screen, font, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
 		textprintf_ex (screen, font, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
 		textprintf_ex (screen, font, 0, 120, 15, -1, "from the textbook \"Game Programming All in One\".");
-		textprintf_ex (screen, font, 0, 150, 15, -1, "Choices can be selected by pressing 1, 2, 3, or 4 on the keyboard.");
+		textprintf_ex (screen, font, 0, 150, 15, -1, "Choices can be selected by pressing A, B, C, or D on the keyboard.");
 		
 		textprintf_ex (screen, font, 0, 180, 15, -1, "Player's score is kept at the bottom of the screen as a ratio.");
 		textprintf_ex (screen, font, 0, 210, 15, -1, "At the end of the game, players final score is displayed.");
@@ -50,7 +50,7 @@ void playStart (int &play, FONT * regFont) {
 		textprintf_ex (screen, regFont, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
 		textprintf_ex (screen, regFont, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
 		textprintf_ex (screen, regFont, 0, 120, 15, -1, "from the textbook \"Game Programming All in One\".");
-		textprintf_ex (screen, regFont, 0, 150, 15, -1, "Choices can be selected by pressing 1, 2, 3, or 4 on the keyboard.");
+		textprintf_ex (screen, regFont, 0, 150, 15, -1, "Choices can be selected by pressing A, B, C, or D on the keyboard.");
 		
 		textprintf_ex (screen, regFont, 0, 180, 15, -1, "Player's score is kept at the bottom of the screen as a ratio.");
 		textprintf_ex (screen, regFont, 0, 210, 15, -1, "At the end of the game, players final score is displayed.");
@@ -244,24 +244,60 @@ void menuChapterInput (int & chapter) {
 
 void printSplitLine (FONT * regFont, std::string line) {
 	int size = line.size();
+	int i = 0;
+	while (size > 0) {
+		textprintf_ex (screen, regFont, 0, 40 + (20*i), 15, -1, "%s", line.substr(0,45).c_str());
+
+		if (size  > 45)
+			line.erase (0,45);
+		else
+			line.erase (0, line.size());
+		size -= 45;
+		i++;
+	}
 }
 
 void printInfo (FONT * regFont, Question quest) {
 	string line;
 
-	// Loads the instructions of the game in the desired Font
 	if (!regFont) {
+		// Print button press for menu or game exit
 		textprintf_ex (screen, font, SCREEN_W - 150, SCREEN_H - 20, 15, -1, "ESC: Exit...");
 		textprintf_ex (screen, font, SCREEN_W - 200, 240, 15, -1, "M: Menu");
+
+		// Print Qustion to screen
+		if (quest.getAsk ().size() <= 45){
+			textprintf_ex (screen, regFont, 0, 40, 15, -1, "%s", quest.getAsk ().c_str());
+		}
+		else
+		{
+			printSplitLine (regFont, quest.getAsk ());
+		}
+
+		textprintf_ex (screen, font, 20, 260, 15, -1, "A: %s", quest.getChoice (0).c_str());
+		textprintf_ex (screen, font, 20, 290, 15, -1, "B: %s", quest.getChoice (1).c_str());
+		textprintf_ex (screen, font, 20, 320, 15, -1, "C: %s", quest.getChoice (2).c_str());
+		textprintf_ex (screen, font, 20, 350, 15, -1, "D: %s", quest.getChoice (3).c_str());
 	}
 	else
 	{
+		// Print button press for menu or game exit
 		textprintf_ex (screen, regFont, SCREEN_W - 150, SCREEN_H - 40, 15, -1, "ESC: Exit...");
 		textprintf_ex (screen, regFont, SCREEN_W - 200, 240, 15, -1, "M: Menu");
-		if (quest.getAsk ().size() <= 65) 
+
+		// Print Qustion to screen
+		if (quest.getAsk ().size() <= 45){
 			textprintf_ex (screen, regFont, 0, 40, 15, -1, "%s", quest.getAsk ().c_str());
+		}
 		else
+		{
 			printSplitLine (regFont, quest.getAsk ());
+		}
+
+		textprintf_ex (screen, regFont, 20, 260, 15, -1, "A: %s", quest.getChoice (0).c_str());
+		textprintf_ex (screen, regFont, 20, 290, 15, -1, "B: %s", quest.getChoice (1).c_str());
+		textprintf_ex (screen, regFont, 20, 320, 15, -1, "C: %s", quest.getChoice (2).c_str());
+		textprintf_ex (screen, regFont, 20, 350, 15, -1, "D: %s", quest.getChoice (3).c_str());
 	}
 }
 

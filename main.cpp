@@ -3,6 +3,7 @@
 using namespace std;
 
 int main (void) {
+	Question quest;
 	vector <vector <Question> > chapterList;
 	vector <string> availImages; 
 	vector <string> availBackground;
@@ -12,6 +13,8 @@ int main (void) {
 	int choice = 0;
 	int unit = -1;
 	int chapter = -1;
+	bool answered = true;
+	char playerChoice = ' ';
 
 	// Initializes the Allegro library and sets up the interrupts
 	if (init_Lib () == 1)
@@ -25,19 +28,6 @@ int main (void) {
 	availFont = getFileNames ("Fonts");
 	availQuestions = getFileNames ("Questions");
 	chapterList = getQuestions (availQuestions);
-
-	// THIS WORKS!
-	/*for (int i = 0; i < (int) chapterList.size(); i++) {
-		for (int k = 0; k < (int) chapterList[i].size(); k++) {
-			cout << chapterList[i][k].getAsk () << endl;
-
-			for (int j = 0; j < chapterList[i][k].numChoice (); j++) {
-				cout << chapterList[i][k].getChoice (j) << endl; 
-			}
-
-			cout << chapterList[i][k].getAns ()<< endl;
-		}
-	} */
 
 	// Creates the window and sets the graphics mode
 	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
@@ -116,10 +106,42 @@ int main (void) {
 		}
 		else {
 			printBackground (titleFont, backImage);
-			Question quest = getRandQuest (chapterList, unit, chapter);
+			if (answered == true) {
+				quest = getRandQuest (chapterList, unit, chapter);
+				answered = false;
+			}
+
 			playGame (regFont, availImages, quest);
 			while (!keypressed());
 			readkey();
+
+			if (key[KEY_A]) {
+				answered = true;
+				playerChoice = 'a';
+			}
+			if (key[KEY_B]) {
+				answered = true;
+				playerChoice = 'b';
+			}
+			if (key[KEY_C]) {
+				answered = true;
+				playerChoice = 'c';
+			}
+			if (key[KEY_D]) {
+				answered = true;
+				playerChoice = 'd';
+			}
+
+			if (answered == true) {
+				if (playerChoice == quest.getAns()) {
+					//Play Winner func
+					cout << "Winner!" << endl;
+				}
+				else  {
+					// Play Lost func
+					cout << "Loser!" << endl;
+				}
+			}
 
 			if (key[KEY_M])
 				play = 1;

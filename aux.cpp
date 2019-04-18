@@ -127,8 +127,6 @@ Question getRandQuest (vector <vector <Question> > chapterList, int unit, int ch
 
 	questRange (unit, chapter, begin, end);
 	randChapter = rand() % ((end - begin) + 1)+begin;
-    cout << randChapter << endl;
-    cout << randQuest << endl;
 
 	return chapterList[randChapter][randQuest];
 }
