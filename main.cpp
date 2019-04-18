@@ -3,18 +3,22 @@
 using namespace std;
 
 int main (void) {
+
 	Question quest;
 	vector <vector <Question> > chapterList;
 	vector <string> availImages; 
 	vector <string> availBackground;
 	vector <string> availFont;
 	vector <string> availQuestions;
+
 	int play = 0;
 	int choice = 0;
 	int unit = -1;
 	int chapter = -1;
 	bool answered = true;
 	char playerChoice = ' ';
+	int questAskd = 0;
+	int ansRight = 0;
 
 	// Initializes the Allegro library and sets up the interrupts
 	if (init_Lib () == 1)
@@ -106,12 +110,14 @@ int main (void) {
 		}
 		else {
 			printBackground (titleFont, backImage);
+			showSelection (regFont, unit, chapter);
 			if (answered == true) {
 				quest = getRandQuest (chapterList, unit, chapter);
 				answered = false;
+				questAskd++;
 			}
 
-			playGame (regFont, availImages, quest);
+			playGame (regFont, availImages, quest, questAskd, ansRight);
 			while (!keypressed());
 			readkey();
 
@@ -134,12 +140,7 @@ int main (void) {
 
 			if (answered == true) {
 				if (playerChoice == quest.getAns()) {
-					//Play Winner func
-					cout << "Winner!" << endl;
-				}
-				else  {
-					// Play Lost func
-					cout << "Loser!" << endl;
+					ansRight++;
 				}
 			}
 

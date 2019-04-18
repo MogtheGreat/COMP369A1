@@ -89,7 +89,7 @@ vector <vector <Question> > getQuestions (vector <string> list) {
 }
 
 void questRange (int unit, int chapter, int &begin, int &end) {
-	if ((unit != -1) && (chapter =+ -1))
+	if ((unit != -1) && (chapter == -1))
 	{
 		if (unit == 0) {
 			begin = 0;

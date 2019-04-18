@@ -77,6 +77,26 @@ void menu (FONT * regFont) {
 	}
 }
 
+void showSelection (FONT * regFont, int unit, int chapter) {
+	if (!regFont) {
+		if ((unit != -1) && (chapter == -1))
+			textprintf_ex (screen, font, 300, SCREEN_H-40, 15, -1, "Unit: %d", unit+1);
+		else if ((unit == -1) && (chapter != -1))
+			textprintf_ex (screen, font, 300, SCREEN_H-40, 15, -1, "Chapter: %d", chapter+1);
+		else
+			textprintf_ex (screen, font, 300, SCREEN_H-40, 15, -1, "All Chaptes");
+	}
+	else {
+		if ((unit != -1) && (chapter == -1))
+			textprintf_ex (screen, regFont, 300, SCREEN_H-40, 15, -1, "Unit: %d", unit+1);
+		else if ((unit == -1) && (chapter != -1))
+			textprintf_ex (screen, regFont, 300, SCREEN_H-40, 15, -1, "Chapter: %d", chapter+1);
+		else {
+			textprintf_ex (screen, regFont, 300, SCREEN_H-40, 15, -1, "All Chaptes");
+		}
+	}
+}
+
 void menuUnit (FONT * regFont) {
 	if (!regFont) {
 		textprintf_ex (screen, font, 0, 100, 15, -1, "Press 1,2,3,4,5 or 6 for the corresponding unit.");
@@ -257,9 +277,8 @@ void printSplitLine (FONT * regFont, std::string line) {
 	}
 }
 
-void printInfo (FONT * regFont, Question quest) {
-	string line;
-
+void printInfo (FONT * regFont, Question quest, int questAskd, int ansRight) {
+	// Regular Font.
 	if (!regFont) {
 		// Print button press for menu or game exit
 		textprintf_ex (screen, font, SCREEN_W - 150, SCREEN_H - 20, 15, -1, "ESC: Exit...");
@@ -274,11 +293,16 @@ void printInfo (FONT * regFont, Question quest) {
 			printSplitLine (regFont, quest.getAsk ());
 		}
 
+		//Print choices to screen. Regular font
 		textprintf_ex (screen, font, 20, 260, 15, -1, "A: %s", quest.getChoice (0).c_str());
 		textprintf_ex (screen, font, 20, 290, 15, -1, "B: %s", quest.getChoice (1).c_str());
 		textprintf_ex (screen, font, 20, 320, 15, -1, "C: %s", quest.getChoice (2).c_str());
 		textprintf_ex (screen, font, 20, 350, 15, -1, "D: %s", quest.getChoice (3).c_str());
+
+		// diplay ratio
+		textprintf_ex (screen, font, 0, SCREEN_H-40, 15,-1, "Correct / Total Questions: %d / %d", ansRight, questAskd-1);
 	}
+	// Custom Font enabled
 	else
 	{
 		// Print button press for menu or game exit
@@ -294,21 +318,25 @@ void printInfo (FONT * regFont, Question quest) {
 			printSplitLine (regFont, quest.getAsk ());
 		}
 
+		// print choices to screen. Custom Font
 		textprintf_ex (screen, regFont, 20, 260, 15, -1, "A: %s", quest.getChoice (0).c_str());
 		textprintf_ex (screen, regFont, 20, 290, 15, -1, "B: %s", quest.getChoice (1).c_str());
 		textprintf_ex (screen, regFont, 20, 320, 15, -1, "C: %s", quest.getChoice (2).c_str());
 		textprintf_ex (screen, regFont, 20, 350, 15, -1, "D: %s", quest.getChoice (3).c_str());
+
+		// Display ratio
+		textprintf_ex (screen, regFont, 0, SCREEN_H-40, 15,-1, "Correct / Total Questions: %d / %d", ansRight, questAskd-1);
 	}
 }
 
-void playGame (FONT * regFont, vector <string> availImages, Question quest) {
+void playGame (FONT * regFont, vector <string> availImages, Question quest, int questAskd, int ansRight) {
 	// Choose a new random image
 	BITMAP * image = randImage (availImages);
 	if (image)
 		blit (image, screen, 0,0, (SCREEN_W - image -> w), 40, image -> w, image -> h); //display the image
 
 	// Print options/info about game
-	printInfo (regFont, quest);
+	printInfo (regFont, quest, questAskd, ansRight);
 	rest (100);
 	destroy_bitmap (image); //delete bitmap from memory
 }
