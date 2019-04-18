@@ -4,13 +4,14 @@ using namespace std;
 
 int main (void) {
 
-	Question quest;
-	vector <vector <Question> > chapterList;
-	vector <string> availImages; 
-	vector <string> availBackground;
-	vector <string> availFont;
+	Question quest; // Holds the current question to be asked
+	vector <vector <Question> > chapterList; // Holds all chapters quizes from textbook
+	vector <string> availImages; 			//  Available images from Image folder
+	vector <string> availBackground;		// Available background from Background foler
+	vector <string> availFont;				// Available question file from Question folder
 	vector <string> availQuestions;
 
+	// control variables and counters
 	int playScreen = 0;
 	int choice = 0;
 	int unit = -1;
@@ -63,7 +64,7 @@ int main (void) {
 
 		// Show Main Menu
 		else if (playScreen == 1) {
-			printBackground (titleFont, backImage); // Prints the background screen
+			printBackground (titleFont, backImage); // Prints the background screen. Also used to clear previous screen
 			menu (regFont); // Add menu selection
 			while (!keypressed()); // Wait for key press
 			readkey();
@@ -84,44 +85,49 @@ int main (void) {
 			}
 		}
 
+		//Shows Unit Selection Menu
 		else if (choice == 1) {
-			printBackground (titleFont, backImage);
-			menuUnit (regFont);
-			while (!keypressed());
+			printBackground (titleFont, backImage); // Prints the background screen. Also used to clear previous screen
+			menuUnit (regFont); // Adds in unit menu selections
+			while (!keypressed()); // Wait for key press
 			readkey();
 
-			menuUnitInput (unit);
-			if (unit != -1) {
+			menuUnitInput (unit); // Get user input for unit selection
+			if (unit != -1) { // if player made a choice, allow game to move onto next screen
 				choice = 3;
 				chapter = -1;
 			}
 		}
 
+		//Shows Chapter Selection Menu
 		else if (choice == 2) {
-			printBackground (titleFont, backImage);
-			menuChapter (regFont);
-			while (!keypressed());
+			printBackground (titleFont, backImage); // Prints the background screen. Also used to clear previous screen
+			menuChapter (regFont); // Adds in chapter menu selection
+			while (!keypressed()); // Wait for key press
 			readkey();
 
-			menuChapterInput (chapter);
-			if (chapter != -1) {
+			menuChapterInput (chapter); // Get user input for chapter selection
+			if (chapter != -1) { // if player made a choice, allow game to move onto next screen
 				choice = 3;
 				unit = -1;
 			}
 		}
+		// Shows multiple choice question screen
 		else {
-			printBackground (titleFont, backImage);
-			showSelection (regFont, unit, chapter);
-			if (answered == true) {
-				quest = getRandQuest (chapterList, unit, chapter);
+			printBackground (titleFont, backImage); // Prints the background screen. Also used to clear previous screen
+			showSelection (regFont, unit, chapter); // Shows player chapter selection at bottom middle of screen
+			
+			if (answered == true) { // If previous question has been anwered..
+				quest = getRandQuest (chapterList, unit, chapter); // Get next random question 
 				answered = false;
 				questAskd++;
 			}
 
-			playGame (regFont, availImages, quest, questAskd, ansRight);
-			while (!keypressed());
+			playGame (regFont, availImages, quest, questAskd, ansRight); // Display screen for question
+			while (!keypressed()); // Wait for key press
 			readkey();
 
+			// Checks keys pressed to see if valid choice.
 			if (key[KEY_A]) {
 				answered = true;
 				playerChoice = 'a';
@@ -139,12 +145,14 @@ int main (void) {
 				playerChoice = 'd';
 			}
 
+			// Checks to see if answer is correct
 			if (answered == true) {
 				if (playerChoice == quest.getAns()) {
 					ansRight++;
 				}
 			}
 
+			// Checks to see if player wants main menu
 			if (key[KEY_M])
 				playScreen = 1;
 		}
