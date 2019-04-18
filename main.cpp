@@ -40,44 +40,45 @@ int main (void) {
 		return 1;
 	}
 
-	// Set up Screen
 	PALETTE palette;	// Color palette for fonts.
-	FONT * titleFont = load_font (TITLEFONT, palette, NULL);
-	FONT * regFont = randFont (availFont, palette);
-	BITMAP * backImage = randBack (availBackground);
-	printBackground (titleFont, backImage);
+	FONT * titleFont = load_font (TITLEFONT, palette, NULL); // Loads Title font 
+	FONT * regFont = randFont (availFont, palette); // Gets random font and load it
+	BITMAP * backImage = randBack (availBackground); // Get random background image and loads it
+	printBackground (titleFont, backImage); // Prints the background screen
 	
 
 	// While user has not pressed ESC key.
 	while (!key[KEY_ESC]) {
 
+		// Plays instruction at start of game
 		if (play == 0) {
-			printBackground (titleFont, backImage);
-			playStart (play, regFont);
-			while (!keypressed());
-			readkey();
+			printBackground (titleFont, backImage); // Prints the background screen
+			playStart (play, regFont); // Add instruction to screen
+			while (!keypressed()); // Wait for key press
+			readkey(); // Removes key press from buffer. Without keypressed() remains true after first key press
 			
-			if (key[KEY_ENTER])
+			if (key[KEY_ENTER])// if player press enter continue game
 				play = 1;
 		}
 
+		// Show Main Menu
 		else if (play == 1) {
-			printBackground (titleFont, backImage);
-			menu (regFont);
-			while (!keypressed());
+			printBackground (titleFont, backImage); // Prints the background screen
+			menu (regFont); // Add menu selection
+			while (!keypressed()); // Wait for key press
 			readkey();
 			
-			if (key[KEY_A]) {
+			if (key[KEY_A]) { // Player selects all chapters
 				play = 2;
 				unit = -1;
 				chapter = -1;
 			}
 			
-			if (key[KEY_U]) {
+			if (key[KEY_U]) { //Player select unit selection
 				play = 2;
 				choice = 1;
 			}
-			if (key[KEY_C]) {
+			if (key[KEY_C]) { // Player select chapter selection
 				play = 2;
 				choice = 2;
 			}

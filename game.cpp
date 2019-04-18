@@ -32,6 +32,7 @@ void printBackground (FONT * titleFont, BITMAP * backImage) {
 }
 
 void playStart (int &play, FONT * regFont) {
+	// Print out instructions in regular font
 	if (!regFont) {
 		textprintf_ex (screen, font, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
 		textprintf_ex (screen, font, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
@@ -46,6 +47,7 @@ void playStart (int &play, FONT * regFont) {
 		textprintf_ex (screen, font, 200, SCREEN_H-80, 15, -1, "Press Enter to continue.");
 		textprintf_ex (screen, font, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
 	}
+	// Print out instructions in custom font
 	else {
 		textprintf_ex (screen, regFont, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
 		textprintf_ex (screen, regFont, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
@@ -63,12 +65,14 @@ void playStart (int &play, FONT * regFont) {
 }
 
 void menu (FONT * regFont) {
+	// Print out main menu in regular font
 	if (!regFont) {
 		textprintf_ex (screen, font, 0, 100, 15, -1, "Press A for all chapters from text.");
 		textprintf_ex (screen, font, 0, 150, 15, -1, "Press U to choose a unit from text.");
 		textprintf_ex (screen, font, 0, 200, 15, -1, "Press C to choose a chapter from text.");
 		textprintf_ex (screen, font, 200, SCREEN_H-60, 15, -1, "Press ESC to EXIT.");
 	}
+	// Print out main menu in custom font
 	else {
 		textprintf_ex (screen, regFont, 0, 100, 15, -1, "Press A for all chapters from text.");
 		textprintf_ex (screen, regFont, 0, 150, 15, -1, "Press U to choose a unit from text.");
@@ -78,6 +82,7 @@ void menu (FONT * regFont) {
 }
 
 void showSelection (FONT * regFont, int unit, int chapter) {
+	// Print out player's selection in regular font
 	if (!regFont) {
 		if ((unit != -1) && (chapter == -1))
 			textprintf_ex (screen, font, 300, SCREEN_H-40, 15, -1, "Unit: %d", unit+1);
@@ -86,6 +91,7 @@ void showSelection (FONT * regFont, int unit, int chapter) {
 		else
 			textprintf_ex (screen, font, 300, SCREEN_H-40, 15, -1, "All Chaptes");
 	}
+	// Print out player's selection in custom font
 	else {
 		if ((unit != -1) && (chapter == -1))
 			textprintf_ex (screen, regFont, 300, SCREEN_H-40, 15, -1, "Unit: %d", unit+1);
@@ -98,6 +104,7 @@ void showSelection (FONT * regFont, int unit, int chapter) {
 }
 
 void menuUnit (FONT * regFont) {
+	// Print out menu for unit select in regular font
 	if (!regFont) {
 		textprintf_ex (screen, font, 0, 100, 15, -1, "Press 1,2,3,4,5 or 6 for the corresponding unit.");
 		textprintf_ex (screen, font, 0, 120, 15, -1, "1: Unit 1");
@@ -106,6 +113,7 @@ void menuUnit (FONT * regFont) {
 		textprintf_ex (screen, font, 0, 180, 15, -1, "4: Unit 4");
 
 	}
+	// Print out menu for unit select in custom font
 	else {
 		textprintf_ex (screen, regFont, 0, 100, 15, -1, "Press 1,2,3, or 4 for the corresponding unit.");
 		textprintf_ex (screen, regFont, 0, 120, 15, -1, "1: Unit 1");
@@ -132,6 +140,7 @@ void menuUnitInput (int & unit) {
 }
 
 void menuChapter (FONT * regFont) {
+	// Print out chapter select in regular font.
 	if (!regFont) {
 		textprintf_ex (screen, font, 0, 100, 15, -1, "A: Chapter 1");
 		textprintf_ex (screen, font, 0, 120, 15, -1, "B: Chapter 2");
@@ -159,6 +168,7 @@ void menuChapter (FONT * regFont) {
 		textprintf_ex (screen, font, 140, 180, 15, -1, "U: Chapter 21");
 		textprintf_ex (screen, font, 140, 200, 15, -1, "V: Chapter 22");
 	}
+	// Print out chapter select in custom font.
 	else {
 		textprintf_ex (screen, regFont, 0, 100, 15, -1, "A: Chapter 1");
 		textprintf_ex (screen, regFont, 0, 120, 15, -1, "B: Chapter 2");
@@ -194,70 +204,70 @@ void menuChapter (FONT * regFont) {
 */
 void menuChapterInput (int & chapter) {
 	// A to V keys chooses which Chapter to take questions from
-	if (key[KEY_A]) {
+	if (key[KEY_A]) { // Chapter 1
 		chapter = 0;
 	}
-	if (key[KEY_B]) {
+	if (key[KEY_B]) { // Chapter 2
 		chapter = 1;
 	}
-	if (key[KEY_C]) {
+	if (key[KEY_C]) { // Chapter 3
 		chapter = 2;
 	}
-	if (key[KEY_D]) {
+	if (key[KEY_D]) { // Chapter 4
 		chapter = 3;
 	}
-	if (key[KEY_E]) {
+	if (key[KEY_E]) { // Chapter 5
 		chapter = 4;
 	}
-	if (key[KEY_F]) {
+	if (key[KEY_F]) { // Chapter 6
 		chapter = 5;
 	}
-	if (key[KEY_G]) {
+	if (key[KEY_G]) { // Chapter 7
 		chapter = 6;
 	}
-	if (key[KEY_H]) {
+	if (key[KEY_H]) { // Chapter 8
 		chapter = 7;
 	}
-	if (key[KEY_I]) {
+	if (key[KEY_I]) { // Chapter 9
 		chapter = 8;
 	}
-	if (key[KEY_J]) {
+	if (key[KEY_J]) { // Chapter 10
 		chapter = 9;
 	}
-	if (key[KEY_K]) {
+	if (key[KEY_K]) { // Chapter 11
 		chapter = 10;
 	}
-	if (key[KEY_L]) {
+	if (key[KEY_L]) { // Chapter 12
 		chapter = 11;
 	}
-	if (key[KEY_M]) {
+	if (key[KEY_M]) { // Chapter 13
 		chapter = 12;
 	}
-	if (key[KEY_N]) {
+	if (key[KEY_N]) { // Chapter 14
 		chapter = 13;
 	}
-	if (key[KEY_O]) {
+	if (key[KEY_O]) { // Chapter 15
 		chapter = 14;
 	}
-	if (key[KEY_P]) {
+	if (key[KEY_P]) { // Chapter 16
 		chapter = 15;
 	}
-	if (key[KEY_Q]) {
+	if (key[KEY_Q]) { // Chapter 17
 		chapter = 16;
-	}
-	if (key[KEY_R]) {
+	} 
+	if (key[KEY_R]) { // Chapter 18
 		chapter = 17;
 	}
-	if (key[KEY_S]) {
+	if (key[KEY_S]) { // Chapter 19
 		chapter = 18;
 	}
-	if (key[KEY_T]) {
+	if (key[KEY_T]) { // Chapter 20
 		chapter = 19;
 	}
-	if (key[KEY_U]) {
+	if (key[KEY_U]) { // Chapter 21
 		chapter = 20;
 	}
-	if (key[KEY_V]) {
+	if (key[KEY_V]) { // Chapter 22
 		chapter = 21;
 	}
 }
@@ -266,14 +276,14 @@ void printSplitLine (FONT * regFont, std::string line) {
 	int size = line.size();
 	int i = 0;
 	while (size > 0) {
-		textprintf_ex (screen, regFont, 0, 40 + (20*i), 15, -1, "%s", line.substr(0,45).c_str());
+		textprintf_ex (screen, regFont, 0, 40 + (20*i), 15, -1, "%s", line.substr(0,45).c_str()); // print the first 45 characters to screen
 
 		if (size  > 45)
-			line.erase (0,45);
+			line.erase (0,45); // Removes the first 45 characters from string
 		else
-			line.erase (0, line.size());
+			line.erase (0, line.size()); // Removes the rest of the characters
 		size -= 45;
-		i++;
+		i++; // Shifts the next line down.
 	}
 }
 
@@ -285,12 +295,12 @@ void printInfo (FONT * regFont, Question quest, int questAskd, int ansRight) {
 		textprintf_ex (screen, font, SCREEN_W - 200, 240, 15, -1, "M: Menu");
 
 		// Print Qustion to screen
-		if (quest.getAsk ().size() <= 45){
+		if (quest.getAsk ().size() <= 45){ // Checks to see if question can fit without overlappig image
 			textprintf_ex (screen, regFont, 0, 40, 15, -1, "%s", quest.getAsk ().c_str());
 		}
 		else
 		{
-			printSplitLine (regFont, quest.getAsk ());
+			printSplitLine (regFont, quest.getAsk ()); //Divides questions into separate lines
 		}
 
 		//Print choices to screen. Regular font
