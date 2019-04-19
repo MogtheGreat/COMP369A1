@@ -15,6 +15,7 @@ int main (void) {
 	vector <string> soundWrong;				// Available 'Wrong' sound effect from sound folder
 	vector <string> soundSelect;			// Available 'Select' sound effect from sound folder
 	vector <string> soundIntro;				// Available 'Intro' sound effect from sound folder
+	vector <string> availMusic;				// Available .wav from music folder
 
 	// control variables and counters
 	int playScreen = 0;
@@ -27,6 +28,7 @@ int main (void) {
 	int ansRight = 0;
 
 	int volume = 128;
+	int musicVolume = 225;
     int pan = 128;
     int pitch = 1000;
 
@@ -55,6 +57,7 @@ int main (void) {
 	soundWrong = getFileNames ("Sounds/Wrong");
 	soundSelect = getFileNames ("Sounds/Select");
 	soundIntro = getFileNames ("Sounds/Intro");
+	availMusic = getFileNames ("Music");
 
 	// Creates the window and sets the graphics mode
 	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
@@ -74,16 +77,20 @@ int main (void) {
 	SAMPLE * correctEffect = randSound (soundCorrect, "Sounds/Correct/");
 	SAMPLE * wrongEffect = randSound (soundWrong, "Sounds/Wrong/");
 	SAMPLE * selectEffect = randSound  (soundSelect, "Sounds/Select/");
+	SAMPLE * music = randSound (availMusic, "Music/");
 
 	// Play intro sample and destroy it
 	if (introEffect)
 		play_sample(introEffect, volume, pan, pitch, FALSE);
+	if (music) // If music is availabe, play the music with looping
+				play_sample(music, musicVolume, pan, pitch, TRUE);
 
 	// While user has not pressed ESC key.
 	while (!key[KEY_ESC]) {
 
 		// Plays instruction at start of game
 		if (playScreen == 0) {
+
 			printBackground (titleFont, backImage); // Prints the background screen
 			playStart (playScreen, regFont); // Add instruction to screen
 			while (!keypressed()); // Wait for key press
@@ -198,7 +205,6 @@ int main (void) {
 				else if (wrongEffect) { // Player has made wrong choice and there is sample loaded successfully, play sound
 					play_sample(wrongEffect, volume, pan, pitch, FALSE);
 				}
-
 			}
 
 			// Checks to see if player wants main menu
@@ -217,6 +223,7 @@ int main (void) {
 	destroy_sample (correctEffect);
 	destroy_sample (wrongEffect);
 	destroy_sample (selectEffect);
+	destroy_sample (music);
 
 	allegro_exit ();	// Frees all Allegro memory
 	return 0;
