@@ -8,8 +8,13 @@ int main (void) {
 	vector <vector <Question> > chapterList; // Holds all chapters quizes from textbook
 	vector <string> availImages; 			//  Available images from Image folder
 	vector <string> availBackground;		// Available background from Background foler
-	vector <string> availFont;				// Available question file from Question folder
-	vector <string> availQuestions;
+	vector <string> availFont;				// Available font file from Font folder
+	vector <string> availQuestions;			// Available Questions from Question folder
+	
+	vector <string> soundCorrect;			// Available 'Correct' sound effect from sound folder
+	vector <string> soundWrong;				// Available 'Wrong' sound effect from sound folder
+	vector <string> soundSelect;			// Available 'Select' sound effect from sound folder
+	vector <string> soundIntro;				// Available 'Intro' sound effect from sound folder
 
 	// control variables and counters
 	int playScreen = 0;
@@ -21,9 +26,20 @@ int main (void) {
 	int questAskd = 0;
 	int ansRight = 0;
 
+	int volume = 128;
+    int pan = 128;
+    int pitch = 1000;
+
 	// Initializes the Allegro library and sets up the interrupts
 	if (init_Lib () == 1)
 		return 1;
+
+	//install a digital sound driver
+    if (install_sound(DIGI_AUTODETECT, MIDI_NONE, "") != 0) 
+    {
+        allegro_message("Error initializing sound system");
+        return 1;
+    }
 
 	srand (time (NULL)); // seed random generator.
 
@@ -33,6 +49,12 @@ int main (void) {
 	availFont = getFileNames ("Fonts");
 	availQuestions = getFileNames ("Questions");
 	chapterList = getQuestions (availQuestions);
+
+	// Get list of available sound effects
+	soundCorrect = 	getFileNames ("Sounds/Correct");
+	soundWrong = getFileNames ("Sounds/Wrong");
+	soundSelect = getFileNames ("Sounds/Select");
+	soundIntro = getFileNames ("Sounds/Intro");
 
 	// Creates the window and sets the graphics mode
 	int ret = set_gfx_mode (GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
@@ -47,6 +69,15 @@ int main (void) {
 	BITMAP * backImage = randBack (availBackground); // Get random background image and loads it
 	printBackground (titleFont, backImage); // Prints the background screen
 	
+	//Gets a random sample and load it
+	SAMPLE * introEffect = randSound (soundIntro, "Sounds/Intro/");
+	SAMPLE * correctEffect = randSound (soundCorrect, "Sounds/Correct/");
+	SAMPLE * wrongEffect = randSound (soundWrong, "Sounds/Wrong/");
+	SAMPLE * selectEffect = randSound  (soundSelect, "Sounds/Select/");
+
+	// Play intro sample and destroy it
+	if (introEffect)
+		play_sample(introEffect, volume, pan, pitch, FALSE);
 
 	// While user has not pressed ESC key.
 	while (!key[KEY_ESC]) {
@@ -60,6 +91,8 @@ int main (void) {
 			
 			if (key[KEY_ENTER])// if player press enter continue game
 				playScreen = 1;
+			if ((playScreen == 1) && (selectEffect)) // Players had made a valid choice and a sample has been loaded
+				play_sample(selectEffect, volume, pan, pitch, FALSE);
 		}
 
 		// Show Main Menu
@@ -83,6 +116,9 @@ int main (void) {
 				playScreen = 2;
 				choice = 2;
 			}
+
+			if ((playScreen == 2) && (selectEffect)) // Players had made a valid choice and a sample has been loaded
+				play_sample(selectEffect, volume, pan, pitch, FALSE);
 		}
 
 		//Shows Unit Selection Menu
@@ -96,6 +132,9 @@ int main (void) {
 			if (unit != -1) { // if player made a choice, allow game to move onto next screen
 				choice = 3;
 				chapter = -1;
+
+				if (selectEffect) // Sample has been loaded successfully, play sound
+					play_sample(selectEffect, volume, pan, pitch, FALSE);
 			}
 		}
 
@@ -110,6 +149,9 @@ int main (void) {
 			if (chapter != -1) { // if player made a choice, allow game to move onto next screen
 				choice = 3;
 				unit = -1;
+
+				if (selectEffect) // Sample has been loaded successfully, play sound
+					play_sample(selectEffect, volume, pan, pitch, FALSE);
 			}
 		}
 		// Shows multiple choice question screen
@@ -149,7 +191,14 @@ int main (void) {
 			if (answered == true) {
 				if (playerChoice == quest.getAns()) {
 					ansRight++;
+
+					if (correctEffect) // Sample has been loaded successfully, play sound
+						play_sample(correctEffect, volume, pan, pitch, FALSE);
 				}
+				else if (wrongEffect) { // Player has made wrong choice and there is sample loaded successfully, play sound
+					play_sample(wrongEffect, volume, pan, pitch, FALSE);
+				}
+
 			}
 
 			// Checks to see if player wants main menu
@@ -162,6 +211,12 @@ int main (void) {
 	// Release font memory
 	destroy_font(titleFont);
 	destroy_font (regFont);
+
+	//Release sound memory
+	destroy_sample (introEffect);
+	destroy_sample (correctEffect);
+	destroy_sample (wrongEffect);
+	destroy_sample (selectEffect);
 
 	allegro_exit ();	// Frees all Allegro memory
 	return 0;

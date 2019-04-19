@@ -45,6 +45,13 @@ FONT * randFont (vector <string> list, PALETTE palette) {
 	return font;
 }
 
+SAMPLE * randSound (vector <string> list, string path)  {
+	int randomIndex = rand () % list.size();	// Pick a random element from list
+	string filePath = path + list[randomIndex]; // get the complete path to the file
+	SAMPLE * sample = load_sample(filePath.c_str()); // load the sample to the program
+	return sample;
+}
+
 vector <vector <Question> > getQuestions (vector <string> list) {
 	std::sort (list.begin(), list.end());
 	vector <vector <Question> > chapterList;
