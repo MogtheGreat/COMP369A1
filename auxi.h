@@ -5,8 +5,8 @@ Author: Michael G. Oranski
 ID: 2743708
 Date: Apr. 18, 2019
 */
-#ifndef AUX_H
-#define AUX_H
+#ifndef AUXI_H
+#define AUXI_H
 #include <iostream>
 #include <vector>
 #include <string>

@@ -8,7 +8,7 @@ Date: Apr. 18, 2019
 #ifndef MAIN_H
 #define MAIN_H
 #include <allegro.h>
-#include "aux.h"
+#include "auxi.h"
 
 //All grpahics and sound in Game. Allows for easy swapping.
 #define TITLEFONT "TitleFont/Circuit Mage(24).pcx"

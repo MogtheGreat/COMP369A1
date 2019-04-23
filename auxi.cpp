@@ -6,7 +6,7 @@ ID: 2743708
 Date: Apr. 18, 2019
 */
 
-#include "aux.h"
+#include "auxi.h"
 
 using namespace std;
 
