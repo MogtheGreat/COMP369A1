@@ -1,3 +1,96 @@
+/*
+Title: main.cpp
+Description: Plays the game Pocket Trivia A1 which is trivia game that can be played completely from the
+			 keyboard.
+Author: Michael G. Oranski
+ID: 2743708
+Date: Apr. 18, 2019
+*/
+/*
+ DOCUMENTATION
+ Program Purpose:
+ 	To play a trivia game called Pocket Trivia A1. The program will display the question to the
+ 	player along with a list of four possible answer.
+
+  Compile (assuming running on Linux):
+ 	gcc -Wall main.cpp aux.cpp game.cpp question.cpp `pkg-config --cflags --libs allegro` -lstdc++ -o Trivia
+ 	or
+	make
+ Execution (assuming running on Linux):
+ 	./Trivia
+
+class:
+	Question 	- Represents the questions from the textbook. Contains the questions, the choices available, and the ansewr
+ 
+ Variables:
+	Question quest; // Holds the current question to be asked
+	vector <vector <Question> > chapterList; // Holds all chapters quizes from textbook
+	vector <string> availImages; 			//  Available images from Image folder
+	vector <string> availBackground;		// Available background from Background foler
+	vector <string> availFont;				// Available font file from Font folder
+	vector <string> availQuestions;			// Available Questions from Question folder
+	
+	vector <string> soundCorrect;			// Available 'Correct' sound effect from sound folder
+	vector <string> soundWrong;				// Available 'Wrong' sound effect from sound folder
+	vector <string> soundSelect;			// Available 'Select' sound effect from sound folder
+	vector <string> soundIntro;				// Available 'Intro' sound effect from sound folder
+	vector <string> availMusic;				// Available .wav from music folder
+
+	// control variables and counters
+	int playScreen = 0;
+	int choice = 0;
+	int unit = -1;
+	int chapter = -1;
+	bool answered = true;
+	char playerChoice = ' ';
+	int questAskd = 0;
+	int ansRight = 0;
+
+	// Sound variables 
+	int volume = 128;
+	int musicVolume = 225;
+    int pan = 128;
+    int pitch = 1000;
+ */
+/*
+	TEST PLAN
+
+Normal Case 1
+Choose all Chapters.
+Play through 5 or so quesitons.
+Exit.
+
+Normal Case 2
+Choose unit.
+Choose unit 1.
+Play 2 to 3 questions.
+Go back to menu.
+Choose next unit.
+Repeat until all units have been tested.
+exit.
+
+Normal Case 3
+Choose chapter
+Choose chapter 1.
+Play 2 to 3 questions.
+Go back to menu.
+Choose next chapter.
+Repeat until all chapters have been tested.
+exit.
+
+Bad Data Case
+Press anything else other then options listed. - pass
+Remove image or sound from folder before game start. - pass 
+Remove image or sound from folder after game start. - Seg fault
+Remove question file before game start. - Seg fault
+Remove question file after game start. - pass
+Switch image files around. - pass
+Switch image and sound around. - seg fault.
+
+Limit Test
+N/A
+*/
+
 #include "game.h"
 
 using namespace std;
@@ -27,6 +120,7 @@ int main (void) {
 	int questAskd = 0;
 	int ansRight = 0;
 
+	// Sound variables 
 	int volume = 128;
 	int musicVolume = 225;
     int pan = 128;
@@ -92,7 +186,7 @@ int main (void) {
 		if (playScreen == 0) {
 
 			printBackground (titleFont, backImage); // Prints the background screen
-			playStart (playScreen, regFont); // Add instruction to screen
+			playStart (regFont); // Add instruction to screen
 			while (!keypressed()); // Wait for key press
 			readkey(); // Removes key press from buffer. Without keypressed() remains true after first key press
 			

@@ -1,7 +1,23 @@
+/*
+Title: game.cpp
+Description: The game graphic file that contains functions that mostly deal with the game's graphics.
+Author: Michael G. Oranski
+ID: 2743708
+Date: Apr. 18, 2019
+*/
 #include "game.h"
 
 using namespace std;
 
+/*
+	Initialize the allegro library and components. Checks to make sure
+	they are properly initialized. 
+	Paramm:
+		N/A
+	Return:
+		1 - problems with one of the components
+		0 - all clear
+*/
 int init_Lib () {
 	int check = allegro_init ();		// Initialize Allegro library
 	check += install_keyboard ();		// Install the keyboard interrupt
@@ -15,15 +31,25 @@ int init_Lib () {
 		return 0;
 }
 
+/*
+	Prints the background to screen. This consist of one bitmap for the background image
+	and one title in the upper left hand corner. If param for image or font not initialized,
+	then no image is displayed and title is in normal font.
+	Param:
+		titleFont 	- A FONT variable that represents a customized font to be used. Used for title.
+		backImage 	- A BITMAP variable that represents the background image.
+	Return:
+		N/A
+*/
 void printBackground (FONT * titleFont, BITMAP * backImage) {
 	// generate background
 	if (backImage)
 		blit (backImage, screen, 0,0, 0, 0, SCREEN_W, SCREEN_H); //display the image
 
 	if (!titleFont)
-		textprintf_ex (screen, font, 100, 0, 15, -1, "Pocket Trivia"); // Print title of the game in regular font
+		textprintf_ex (screen, font, 100, 0, 15, -1, "Pocket Trivia A1"); // Print title of the game in regular font
 	else 
-		textprintf_ex (screen, titleFont, 100, 0, 15, -1, "Pocket Trivia"); // Print title of the game in custom font
+		textprintf_ex (screen, titleFont, 100, 0, 15, -1, "Pocket Trivia A1"); // Print title of the game in custom font
 
 	// print borders
 	hline (screen, 0,40,SCREEN_W, COLORLINE);
@@ -31,10 +57,19 @@ void printBackground (FONT * titleFont, BITMAP * backImage) {
 	rest (100);
 }
 
-void playStart (int &play, FONT * regFont) {
+/*
+	Prints the instructions on how to play the game. If there is no custom font loaded, the program
+	will use the regular font.
+
+	Param:
+		regFont 	-  A FONT variable that represents a customized font to be used. 
+	Return:
+		N/A
+*/
+void playStart (FONT * regFont) {
 	// Print out instructions in regular font
 	if (!regFont) {
-		textprintf_ex (screen, font, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
+		textprintf_ex (screen, font, 0, 50, 15, -1, "Welcome to POCKET TRIVIA A1!");
 		textprintf_ex (screen, font, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
 		textprintf_ex (screen, font, 0, 120, 15, -1, "from the textbook \"Game Programming All in One\".");
 		textprintf_ex (screen, font, 0, 150, 15, -1, "Choices can be selected by pressing A, B, C, or D on the keyboard.");
@@ -49,7 +84,7 @@ void playStart (int &play, FONT * regFont) {
 	}
 	// Print out instructions in custom font
 	else {
-		textprintf_ex (screen, regFont, 0, 50, 15, -1, "Welcome to POCKET TRIVIA!");
+		textprintf_ex (screen, regFont, 0, 50, 15, -1, "Welcome to POCKET TRIVIA A1!");
 		textprintf_ex (screen, regFont, 0, 100, 15, -1, "In this trivia game, players are given multple choice questions");
 		textprintf_ex (screen, regFont, 0, 120, 15, -1, "from the textbook \"Game Programming All in One\".");
 		textprintf_ex (screen, regFont, 0, 150, 15, -1, "Choices can be selected by pressing A, B, C, or D on the keyboard.");
@@ -64,6 +99,15 @@ void playStart (int &play, FONT * regFont) {
 	}
 }
 
+/*
+	Prints the main menu to screen. If there is no custom font loaded, the program
+	will use the regular font.
+
+	Param:
+		regFont 	-  A FONT variable that represents a customized font to be used. 
+	Return:
+		N/A
+*/
 void menu (FONT * regFont) {
 	// Print out main menu in regular font
 	if (!regFont) {
@@ -81,6 +125,17 @@ void menu (FONT * regFont) {
 	}
 }
 
+/*
+	Prints out the player's choice at the bottom of the Question screen. If there is no custom font loaded, the program
+	will use the regular font.
+
+	Param:
+		regFont 	-  A FONT variable that represents a customized font to be used.
+		unit 		- An integer variable that represents the unit being tested.
+		chapter 	- An integer varable that represents the chapter being tested.
+	Return:
+		N/A
+*/
 void showSelection (FONT * regFont, int unit, int chapter) {
 	// Print out player's selection in regular font
 	if (!regFont) {
@@ -103,6 +158,15 @@ void showSelection (FONT * regFont, int unit, int chapter) {
 	}
 }
 
+/*
+	Prints out the unit menu to screen. If there is no custom font loaded, the program
+	will use the regular font.
+
+	Param:
+		regFont 	-  A FONT variable that represents a customized font to be used. 
+	Return:
+		N/A
+*/
 void menuUnit (FONT * regFont) {
 	// Print out menu for unit select in regular font
 	if (!regFont) {
@@ -123,6 +187,13 @@ void menuUnit (FONT * regFont) {
 	}
 }
 
+/*
+	Gets the input from the player and saves it in the parameter.
+	Param:
+		Unit 	- A reference to an integer that represent the player's choice in unit selection.
+	Return:
+		N/A
+*/
 void menuUnitInput (int & unit) {
 	// 1,2,3,4 keys chooses which Unit to take questions from
 	if (key[KEY_1]) {
@@ -139,6 +210,15 @@ void menuUnitInput (int & unit) {
 	}
 }
 
+/*
+	Prints out the chapter selection menu. If there is no custom font loaded, the program
+	will use the regular font.
+
+	Param:
+		regFont 	-  A FONT variable that represents a customized font to be used. 
+	Return:
+		N/A
+*/
 void menuChapter (FONT * regFont) {
 	// Print out chapter select in regular font.
 	if (!regFont) {
@@ -199,6 +279,11 @@ void menuChapter (FONT * regFont) {
 }
 
 /*
+	Gets the Chapter selection input from the player and saves it in the parameter.
+	Param:
+		Unit 	- A reference to an integer that represent the player's choice in chapter selection.
+	Return:
+		N/A
 	NOTE: There got to be a better way of doing this function.
 		  Because right now this function burns my eyes!
 */
@@ -272,6 +357,17 @@ void menuChapterInput (int & chapter) {
 	}
 }
 
+/*
+	Takes in the line and split it into several lines if the current line ever
+	exceeds 45 characters in length. This cutoff point was determined by trial and error.
+
+	Param:
+		regFont 	-  A FONT variable that represents a customized font to be used.
+		line 		- A string that represents the sentence beinging broken down.
+	Return:
+		N/A
+
+*/
 void printSplitLine (FONT * regFont, std::string line) {
 	int size = line.size();
 	int i = 0;
@@ -287,6 +383,20 @@ void printSplitLine (FONT * regFont, std::string line) {
 	}
 }
 
+/*
+	Generates the question. Prints the question in the top left corner, underneath the title.
+	Prints the choices in the center of the screen. Prints the return to main menu option and
+	exit option. Prints the total question asked and total question correct in the lower left
+	corner.
+
+	Param:
+		regFont 	-  A FONT variable that represents a customized font to be used.
+		Question 	-  A Question object that holds the questions, choice, and answer
+		questAskd   -  An integer that represents the total number of questions asked
+		ansRight 	-  An integer that represents the total number of question answered correctly
+	Return:
+		N/A
+*/
 void printInfo (FONT * regFont, Question quest, int questAskd, int ansRight) {
 	// Regular Font.
 	if (!regFont) {
@@ -325,7 +435,7 @@ void printInfo (FONT * regFont, Question quest, int questAskd, int ansRight) {
 		}
 		else
 		{
-			printSplitLine (regFont, quest.getAsk ());
+			printSplitLine (regFont, quest.getAsk ()); // Dvides the questions into several lines
 		}
 
 		// print choices to screen. Custom Font
@@ -339,6 +449,18 @@ void printInfo (FONT * regFont, Question quest, int questAskd, int ansRight) {
 	}
 }
 
+/*
+	Generates the question screen. Displays a random image in the right hand corner. Prints the question,
+	options and statistic in the disered positon.
+	Param:
+		regFont 	 -  A FONT variable that represents a customized font to be used.
+		availImages  - A vector that is a list of all aviable images in the image folder
+		Question 	 -  A Question object that holds the questions, choice, and answer
+		questAskd    -  An integer that represents the total number of questions asked
+		ansRight 	 -  An integer that represents the total number of question answered correctly
+	Return:
+		N/A
+*/
 void playGame (FONT * regFont, vector <string> availImages, Question quest, int questAskd, int ansRight) {
 	// Choose a new random image
 	BITMAP * image = randImage (availImages);

@@ -1,9 +1,14 @@
+/*
+Title: game.h
+Description: The game graphic file that contains functions that mostly deal with the game's graphics.
+Author: Michael G. Oranski
+ID: 2743708
+Date: Apr. 18, 2019
+*/
 #ifndef MAIN_H
 #define MAIN_H
 #include <allegro.h>
 #include "aux.h"
-
-//Struct that represent Question and answer
 
 //All grpahics and sound in Game. Allows for easy swapping.
 #define TITLEFONT "TitleFont/Circuit Mage(24).pcx"
@@ -13,7 +18,7 @@ int init_Lib ();
 
 void printBackground (FONT * titleFont, BITMAP * backImage);
 
-void playStart (int &play, FONT * regFont);
+void playStart (FONT * regFont);
 
 void menu (FONT * regFont);
 

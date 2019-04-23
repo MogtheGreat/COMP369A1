@@ -1,3 +1,12 @@
+/*
+Title: main.cpp
+Description: An object that represents a question from the textbook.
+Author: Michael G. Oranski
+ID: 2743708
+Date: Apr. 18, 2019
+*/
+
+
 #ifndef QUESTION_H
 #define QUESTION_H
 
@@ -9,8 +18,7 @@ class Question {
 	std::vector <std::string> choice;
 	char answer;
 public:
-	// Constructor
-	Question ();
+	Question (); // Default Constructor
 	Question (std::string ask1, std::vector <std::string> chc, char ans);
 	void setAsk (std::string ask1);
 	void setChoice (std::vector <std::string> chc);

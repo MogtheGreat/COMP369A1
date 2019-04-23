@@ -1,3 +1,10 @@
+/*
+Title: aux.h
+Description: An auxiliary file that contains functions that help make the game run. 
+Author: Michael G. Oranski
+ID: 2743708
+Date: Apr. 18, 2019
+*/
 #ifndef AUX_H
 #define AUX_H
 #include <iostream>
